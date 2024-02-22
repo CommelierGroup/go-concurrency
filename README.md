@@ -26,3 +26,36 @@ go test -v
 - `TestCounterRaceCondition` 테스트는 레이스 컨디션으로 인해 실패할 가능성이 높습니다. 이는 고루틴 간의 데이터 접근이 동기화되지 않기 때문입니다.
 
 - `TestCounterWithMutex` 테스트는 `sync.Mutex`를 사용하여 데이터 접근을 동기화하기 때문에 성공할 것입니다. 최종 `counter` 값은 1000이 됩니다.
+
+## 테스트 시 레이스 상태 감지
+
+```sh
+go test -race
+```
+
+==================
+WARNING: DATA RACE
+Read at 0x00c00009c158 by goroutine 11:
+go-concurrency.TestCounterRaceCondition.func1()
+/Users/yoojehwan/GolandProjects/go-concurrency/counter_test.go:15 +0x34
+
+Previous write at 0x00c00009c158 by goroutine 7:
+go-concurrency.TestCounterRaceCondition.func1()
+/Users/yoojehwan/GolandProjects/go-concurrency/counter_test.go:15 +0x44
+
+Goroutine 11 (running) created at:
+go-concurrency.TestCounterRaceCondition()
+/Users/yoojehwan/GolandProjects/go-concurrency/counter_test.go:14 +0x70
+testing.tRunner()
+/opt/homebrew/opt/go/libexec/src/testing/testing.go:1595 +0x1b0
+testing.(*T).Run.func1()
+/opt/homebrew/opt/go/libexec/src/testing/testing.go:1648 +0x40
+
+Goroutine 7 (finished) created at:
+go-concurrency.TestCounterRaceCondition()
+/Users/yoojehwan/GolandProjects/go-concurrency/counter_test.go:14 +0x70
+testing.tRunner()
+/opt/homebrew/opt/go/libexec/src/testing/testing.go:1595 +0x1b0
+testing.(*T).Run.func1()
+/opt/homebrew/opt/go/libexec/src/testing/testing.go:1648 +0x40
+==================
