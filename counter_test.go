@@ -19,6 +19,7 @@ func TestCounterRaceCondition(t *testing.T) {
 
 	wg.Wait()
 
+	// counter 에 동시 접근하는 문제로 1000이 아닐 가능성이 높습니다.
 	if counter != 1000 {
 		t.Errorf("Expected counter to be 1000, got %d", counter)
 	}
@@ -41,6 +42,7 @@ func TestCounterWithMutex(t *testing.T) {
 
 	wg.Wait()
 
+	// mutex 를 사용하여 동시 접근 문제를 해결했기 때문에 1000 을 보장합니다.
 	if counter != 1000 {
 		t.Errorf("Expected counter to be 1000, got %d", counter)
 	}
