@@ -33,6 +33,7 @@ go test -v
 go test -race
 ```
 
+```
 ==================
 WARNING: DATA RACE
 Read at 0x00c00009c158 by goroutine 11:
@@ -59,3 +60,4 @@ testing.tRunner()
 testing.(*T).Run.func1()
 /opt/homebrew/opt/go/libexec/src/testing/testing.go:1648 +0x40
 ==================
+```
